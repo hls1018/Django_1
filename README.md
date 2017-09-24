@@ -36,5 +36,11 @@ start_response('200 OK',[('Content-Type','text/htnl')])
 
 就发送了HTTP响应的Header，注意Header只能发送一次，也就是只能调用一次start_response()函数。start_response（）函数接收两个参数，一个是HTTP响应码，一个是一组list表示的HTTP Header，每个Header用一个包含两个str的tuple表示。
 
-通常情况下，都应该把Content-Type 头发送给浏览器。
+通常情况下，都应该把Content-Type 头发送给浏览器。其他很多常用的HTTP Header也应该发送。
+
+然后，函数的返回值返回b'<h1> HELLO ,WEB!</h1>'将作为HTTP响应的body发送给浏览器。
+
+有了wsgi,我们关心的就是如何从environ这个dict对象中拿到HTTP请求信息，然后构造HTML,通过start_response()发送header，最后返回Body.
+
+
 
