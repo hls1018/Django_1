@@ -14,5 +14,27 @@ VIEW:https://github.com/hls1018/Django_1/blob/master/socket_demo1.py
 
   正确的做法是底层代码由专门的服务器软件实现，我们用Python专注于生成HTML文档。因为我们不希望接触到TCP连接，HTTP原始请求和响应格式，所以，需要一个统计的接口，这个接口就是wsgi:web server gateway interface.
   
-VIEW:
+VIEW:https://github.com/hls1018/Django_1/blob/master/wsgi_demo.py
+
+注意：
+
+整个application（）函数本身没有涉及到任何解析HTTP的部分，也就是说，底层代码不需要我们自己编写，我们只负责在更高层次上面考虑如何响应请求就可以了。
+
+application（）函数必须由WSGI服务器来调用。有很多符合WSGI规范的服务器，我们可以挑选一个来用。
+
+Python内置一个wsgi服务器，这个模块叫wsgiref
+
+application（）函数就是符合WSGI标准的一个HTTP处理函数，它接收两个参数：
+
+    //environ:一个包含所有HTTP请求信息的dict对象；
+    
+    //start_response:一个发送HTTP响应的函数。
+    
+在application（）函数中，调用：
+
+start_response('200 OK',[('Content-Type','text/htnl')])
+
+就发送了HTTP响应的Header，注意Header只能发送一次，也就是只能调用一次start_response()函数。start_response（）函数接收两个参数，一个是HTTP响应码，一个是一组list表示的HTTP Header，每个Header用一个包含两个str的tuple表示。
+
+通常情况下，都应该把Content-Type 头发送给浏览器。
 
